@@ -1,6 +1,7 @@
 task :default do
   system("ruby #{File.dirname(__FILE__)}/test.rb") or raise
-  system("git push origin master && git push heroku master") or raise
+  system("git push origin master") or raise
+  system("git push heroku master") or raise
 end
 
 task :iframe do
