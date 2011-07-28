@@ -34,6 +34,18 @@ class MyTest < Test::Unit::TestCase
     assert_match %r{referer=http://www.youtube.com/}, @out.read
   end
   
+  def test_dont_log_blank_referer
+    get "/anything", {}, {"HTTP_REFERER" => ""}
+    @out.rewind
+    assert_no_match %r{referer=}, @out.read
+  end
+  
+  def test_dont_log_absent_referer
+    get "/anything", {}, {}
+    @out.rewind
+    assert_no_match %r{referer=}, @out.read
+  end
+  
   def app
     Rack::Builder.parse_file(File.dirname(__FILE__) + "/config.ru").first
   end
