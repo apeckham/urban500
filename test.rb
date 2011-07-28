@@ -31,7 +31,7 @@ class MyTest < Test::Unit::TestCase
   def test_log_referer
     get "/anything", {}, {"HTTP_REFERER" => "http://www.youtube.com/"}
     @out.rewind
-    assert_match %r{http://www.youtube.com/}, @out.read
+    assert_match %r{referer=http://www.youtube.com/}, @out.read
   end
   
   def app
