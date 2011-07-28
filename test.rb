@@ -28,22 +28,13 @@ class MyTest < Test::Unit::TestCase
     assert_match /Something went wrong/, last_response.body
   end
   
-  def test_log_referer
-    get "/anything", {}, {"HTTP_REFERER" => "http://www.youtube.com/"}
+  def test_log
+    get "/anything", {}, {"HTTP_REFERER" => "http://www.youtube.com/", "REQUEST_URI" => "/blah"}
     @out.rewind
-    assert_match %r{referer=http://www.youtube.com/}, @out.read
-  end
-  
-  def test_dont_log_blank_referer
-    get "/anything", {}, {"HTTP_REFERER" => ""}
-    @out.rewind
-    assert_no_match %r{referer=}, @out.read
-  end
-  
-  def test_dont_log_absent_referer
-    get "/anything", {}, {}
-    @out.rewind
-    assert_no_match %r{referer=}, @out.read
+    actual = @out.read
+    
+    assert_match %r{referer=http://www.youtube.com/}, actual
+    assert_match %r{uri=/blah}, actual
   end
   
   def app
