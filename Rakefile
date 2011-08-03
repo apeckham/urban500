@@ -18,3 +18,7 @@ end
 task :watch do
   exec "watch --interval 10 'curl -D - -s http://www.urbandictionary.com/server-status'"
 end
+
+task :tail do
+  exec "heroku logs -t"
+end
