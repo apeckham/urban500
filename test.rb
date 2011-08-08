@@ -37,6 +37,12 @@ class MyTest < Test::Unit::TestCase
     assert_match %r{uri=/blah}, actual
   end
   
+  def test_healthz
+    get "/urban500/healthz"
+    assert_equal 200, last_response.status
+    assert_equal "ok", last_response.body
+  end
+  
   def app
     Rack::Builder.parse_file(File.dirname(__FILE__) + "/config.ru").first
   end

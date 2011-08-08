@@ -1,5 +1,12 @@
 task :default do
-  system("ruby #{File.dirname(__FILE__)}/test.rb") or raise
+  exec "ruby #{File.dirname(__FILE__)}/test.rb"
+end
+
+task :build do
+  exec "warble"
+end
+
+task :push do
   system("git push origin master") or raise
   system("git push heroku master") or raise
 end

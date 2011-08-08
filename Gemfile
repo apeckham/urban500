@@ -1,2 +1,6 @@
 source :rubygems
-gem 'rack-test'
+
+group :development do
+  gem 'rack-test'
+  gem 'warbler'
+end
